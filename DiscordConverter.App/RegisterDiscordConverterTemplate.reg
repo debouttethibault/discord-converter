@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\video\shell\Open with Discord Converter]
+@="Open with Discord Converter"
+"Icon"="<EXE_PATH>"
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\video\shell\Open with Discord Converter\command]
+@="<EXE_PATH> %1"

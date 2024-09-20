@@ -12,8 +12,6 @@ internal static class Program
     [STAThread]
     private static void Main(string[] args)
     {
-        CreateRegistryFiles();
-        
         var result = Parser.Default.ParseArguments<DiscordConverterOptions>(args);
         if (result.Errors.Any())
         {
@@ -21,35 +19,15 @@ internal static class Program
         }
         
         var options = result.Value;
-        if (string.IsNullOrEmpty(options.FilePath))
+        
+        if (options.ShowFileDialog)
         {
             options.FilePath = GetFilePathFromDialog();
         }
 
         new DiscordConverter(options).RunAsync().Wait();
     }
-
-    private static void CreateRegistryFiles()
-    {
-        var templateFileNames = new[] {"RegisterDiscordConverterTemplate.reg", "UnregisterDiscordConverterTemplate.reg"};
-
-        if (File.Exists(templateFileNames[0].Replace("Template.", ".")))
-        {
-            return;
-        }
-
-        var exePath = Environment.ProcessPath;
-            
-        foreach (var tfn in templateFileNames)
-        {
-            var template = File.ReadAllText(tfn);
-            
-            var modified = template.Replace("<EXE_PATH>", exePath);
-            
-            File.WriteAllText(tfn.Replace("Template.", "."), modified);
-        }
-    }
-
+    
     private static string GetFilePathFromDialog()
     {
         using var dialog = new OpenFileDialog();

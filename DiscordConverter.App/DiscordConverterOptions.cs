@@ -4,7 +4,12 @@ namespace DiscordConverter.App;
 
 public class DiscordConverterOptions
 {
-    [Option("filePath", Required = false, HelpText = "Input file")]
+    #if WINDOWS
+    private const bool FilePathRequired = false;
+    #else
+    private const bool FilePathRequired = true;
+    #endif
+    [Option("filePath", Required = FilePathRequired, HelpText = "Input file")]
     public string FilePath { get; set; } = string.Empty;
 
     [Option("openFileDialog", Required = false, HelpText = "Show open file dialog", Default = true)]

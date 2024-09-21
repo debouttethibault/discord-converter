@@ -8,15 +8,31 @@ namespace DiscordConverter.App;
 
 public class DiscordConverter(DiscordConverterOptions options)
 {
-    public async Task RunAsync()
+    public void Run()
+    {
+        try
+        {
+            ProcessAsync().Wait();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private async Task ProcessAsync()
     {
         var filePath = options.FilePath;
         if (!File.Exists(filePath))
+        {
             throw new FileNotFoundException("File not found", filePath);
+        }
         
         var file = File.OpenRead(filePath);
         if (file.Length < options.TargetFileSize * 1024 * 1024)
+        {
             throw new ApplicationException("File is smaller than target file size");
+        }
         
         var mediaInfo = await FFProbe.AnalyseAsync(options.FilePath);
         

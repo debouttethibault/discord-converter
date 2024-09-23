@@ -30,7 +30,8 @@ jobs:
       
     - name: Upload Path (based on OS)
       run: |
-        if [ "${{ matrix.os }}" = "windows_latest" ]; then
+        if [ "${{ matrix.os }}" == "windows_latest" ]
+        then
           echo "${{ github.workspace }}/DiscordConverter.App/bin/Release/net8.0-windows/publish/*" >> $GITHUB_ENV
         else
           echo "${{ github.workspace }}/DiscordConverter.App/bin/Release/net8.0/publish/*" >> $GITHUB_ENV

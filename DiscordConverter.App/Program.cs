@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+#if WINDOWS
 using System.Windows.Forms;
+#endif
 using CommandLine;
 
 namespace DiscordConverter.App;
